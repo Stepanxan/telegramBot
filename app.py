@@ -1,7 +1,7 @@
 from conf import bot, secret, telebot
 from telebot import types
 from flask import Flask, request
-
+from flask_sslify import SSLify
 
 from gambling import Gembling
 from vertical import Vertical
@@ -12,6 +12,7 @@ from product import Product
 
 
 app = Flask(__name__)
+sslify = SSLify(app)
 @app.route('/'+secret, methods=['POST'])
 def webhook():
     update = telebot.types.Update.de_json(request.stream.read().decode('utf-8'))
@@ -132,4 +133,4 @@ def handle_product(message):
 
 
 if __name__ == '__app__':
-    app.run()
+    app.run(debug=True)
